@@ -26,16 +26,23 @@
 
 	<script src="_framework/blazor.webview.js" autostart="false"></script>
 	<script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var overlay = document.getElementById("overlay");
+            overlay.style.display = "none";
+        });
+
         function closeBox() {
             var overlay = document.getElementById("overlay");
             overlay.style.display = "none";
         }
+
         function openBox(clickedBox) {
             var overlay = document.getElementById("overlay");
             var boxContent = clickedBox.innerHTML;
             overlay.style.display = "flex";
             overlay.querySelector(".box p").innerHTML = boxContent;
         }
+
 	</script>
 </body>
 
