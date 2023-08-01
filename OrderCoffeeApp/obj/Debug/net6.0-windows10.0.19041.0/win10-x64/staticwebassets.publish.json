@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "Te6scuzTvNqgPBGkDQfMSY1giJDmiDoRjvVFXF9DUR0=",
+  "Hash": "hb2+HjX0YPEylPexmEqMSe7M6DycxGOiPhWi5sDJoQQ=",
   "Source": "OrderCoffeeApp",
   "BasePath": "/",
   "Mode": "Root",
@@ -185,6 +185,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\css\\lightlatte.png"
+    },
+    {
+      "Identity": "C:\\Users\\orak\\Desktop\\OrderCoffeeApp\\OrderCoffeeApp\\wwwroot\\css\\logo.png",
+      "SourceId": "OrderCoffeeApp",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\orak\\Desktop\\OrderCoffeeApp\\OrderCoffeeApp\\wwwroot\\",
+      "BasePath": "/",
+      "RelativePath": "css/logo.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\css\\logo.png"
     },
     {
       "Identity": "C:\\Users\\orak\\Desktop\\OrderCoffeeApp\\OrderCoffeeApp\\wwwroot\\css\\open-iconic\\font\\css\\open-iconic-bootstrap.min.css",

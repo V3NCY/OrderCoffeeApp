@@ -892,6 +892,9 @@
     <AppxPackagedFile Include="C:\Users\orak\Desktop\OrderCoffeeApp\OrderCoffeeApp\wwwroot\css\lightlatte.png">
       <PackagePath>wwwroot\css\lightlatte.png</PackagePath>
     </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\orak\Desktop\OrderCoffeeApp\OrderCoffeeApp\wwwroot\css\logo.png">
+      <PackagePath>wwwroot\css\logo.png</PackagePath>
+    </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\orak\Desktop\OrderCoffeeApp\OrderCoffeeApp\wwwroot\css\open-iconic\font\css\open-iconic-bootstrap.min.css">
       <PackagePath>wwwroot\css\open-iconic\font\css\open-iconic-bootstrap.min.css</PackagePath>
     </AppxPackagedFile>
