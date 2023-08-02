@@ -1,49 +1,54 @@
 ﻿@page "/"
+@inject NavigationManager NavigationManager
 
-<div class="container">
-    <div class="row" >
-        <div class="col">
-<img src="css/logo.png" width="70" class="Coffee Order" style="">
-    </div>
-    </div>
-</div>
-
+<div class="logo-wrapper">
+          <img src="css/logo.png" width="50" class="logo-img img-fluid">
+        </div>
+        <h1>Order your coffee here</h1>
      <div class="overlay" id="overlay">
     <div class="box">
         <button class="close-box-btn" onclick="closeBox()">X</button>
         <p style="color: #000;"></p>
-<button class="btn default outlined-button justify-items-center my-3">Choose</button>
+        <button class="btn default outlined-button justify-items-center my-3" @onclick="() => NavigateToPreOrderPage(coffeeChoice)">Choose</button>
     </div>
 </div>
  <div class="container">
     <!-- Menu with Other Boxes -->
     <div class="row justify-content-center my-3">
       <div class="col-sm-4 col-md-3">
-        <div class="menu-box" onclick="openBox(this)">
+        <div class="menu-box" onmouseover="showDescription(this)" onmouseout="hideDescription(this)" onclick="openBox(this)">
+                <h1 style="color: #000;">Cappuccino</h1>
           <img src="css/cappuccino.png" width="200">
         </div>
 
       </div>
       <div class="col-sm-4 col-md-3">
-        <div class="menu-box" onclick="openBox(this)">
+            <div class="menu-box" onmouseover="showDescription(this)" onmouseout="hideDescription(this)" onclick="openBox(this)">
+                    <h1 style="color: #000;">Espresso</h1>
           <img src="css/espresso.png" width="200">
         </div>
       </div>
       <div class="col-sm-4 col-md-3">
-        <div class="menu-box" onclick="openBox(this)">
+        <div class="menu-box" onmouseover="showDescription(this)" onmouseout="hideDescription(this)" onclick="openBox(this)">
+             <h1 style="color: #000;">Can Panna</h1>
           <img src="css/canpanna.png" width="150">
         </div>
       </div>
         <div class="col-sm-4 col-md-3">
-            <div class="menu-box" onclick="openBox(this)">
+                    <div class="menu-box" onmouseover="showDescription(this)" onmouseout="hideDescription(this)" onclick="openBox(this)">
+                <h1 style="color: #000;">Light Latte</h1>
                 <img src="css/lightlatte.png" width="200">
             </div>
         </div>
     </div>
-  </div>
-
+            </div>
  
+@code {
+    private string coffeeChoice;
 
-
-
-
+    private void NavigateToPreOrderPage(string selectedChoice)
+    {
+        coffeeChoice = selectedChoice;
+        NavigationManager.NavigateTo($"/PreOrder?choice={coffeeChoice}");
+    }
+        }

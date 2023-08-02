@@ -36,15 +36,19 @@ p {
     height: 300px;
     background-color: #f0f0f0;
     border-radius: 10px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     font-weight: bold;
     font-size: 16px;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
     margin-bottom: 20px; /* Add margin to separate the boxes vertically */
     padding: 10px; /* Add padding inside the boxes for better spacing */
     background-color: rgba(255, 255, 255, 0.9);
+    display: block;
+    flex-direction: initial;
+    justify-content: initial;
+    align-items: initial;
+    overflow: initial;
+    word-wrap: initial;
+    position: relative;
 }
 
 .overlay {
@@ -87,3 +91,20 @@ button {
     background-image: linear-gradient(-135deg, #DAA520 0%, #FAFAD2 100%);
 }
 
+.logo-wrapper {
+    margin-top: 20px; /* Add some top margin for spacing */
+    text-align: center; /* Center the image horizontally */
+}
+
+.description {
+    display: none; /* Hide the description by default */
+    position: absolute; /* Position the description absolutely */
+    bottom: -25px; /* Adjust the distance between the box and the description */
+    left: 50%; /* Center the description horizontally */
+    transform: translateX(-50%); /* Adjust horizontal centering */
+    background-color: #333;
+    color: #fff;
+    padding: 5px;
+    border-radius: 5px;
+    z-index: 1; /* Set a higher z-index to ensure the description is above other elements */
+}

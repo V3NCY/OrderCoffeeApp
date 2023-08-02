@@ -1,0 +1,42 @@
+﻿@page "/PreOrder"
+@inject NavigationManager NavigationManager
+
+<h1>Pre-Order Page</h1>
+<ImageBox CoffeeChoice="@coffeeChoice" />
+
+<h2>Options:</h2>
+<div class="options">
+    @*<button @onclick="() => SelectOption('Option 1')" class="btn btn-primary rounded-circle">@("1")</button>
+    <button @onclick="() => SelectOption('Option 2')" class="btn btn-primary rounded-circle">@("2")</button>
+    <button @onclick="() => SelectOption('Option 3')" class="btn btn-primary rounded-circle">@("3")</button>
+    <button @onclick="() => SelectOption('Option 4')" class="btn btn-primary rounded-circle">@("4")</button>
+    <button @onclick="() => SelectOption('Option 5')" class="btn btn-primary rounded-circle">@("5")</button>*@
+</div>
+
+@code {
+    [Parameter]
+    public string Choice { get; set; }
+
+    private string coffeeChoice;
+
+    protected override void OnInitialized()
+    {
+        var uri = new Uri(NavigationManager.Uri);
+        coffeeChoice = System.Web.HttpUtility.ParseQueryString(uri.Query).Get("choice");
+    }
+
+    private void SelectOption(string option)
+    {
+        // Handle the selected option here
+        // For example, you can store the selected option in a variable or perform other actions
+    }
+    private string goBack;
+
+    private void NavigateToPreOrderPage(string selectedChoice)
+    {
+        goBack = selectedChoice;
+        NavigationManager.NavigateTo($"/");
+    }
+
+
+}

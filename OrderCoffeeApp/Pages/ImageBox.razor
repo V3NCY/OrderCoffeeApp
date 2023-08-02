@@ -1,0 +1,24 @@
+﻿@code {
+    [Parameter]
+    public string CoffeeChoice { get; set; }
+}
+
+<div class="image-wrapper">
+    <!-- Display the chosen coffee choice image here (adjust the source accordingly) -->
+    @if (CoffeeChoice == "Cappuccino")
+    {
+        <img src="~/css/cappuccino.png">
+    }
+    else if (CoffeeChoice == "Espresso")
+    {
+        <img src="~/css/espresso.png">
+    }
+    else if (CoffeeChoice == "Can Panna")
+    {
+        <img src="~/css/canpanna.png">
+    }
+    else if (CoffeeChoice == "Light Latte")
+    {
+        <img src="~/css/lightlatte.png">
+    }
+</div>
