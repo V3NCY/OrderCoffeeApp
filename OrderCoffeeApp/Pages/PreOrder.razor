@@ -5,25 +5,90 @@
 
 @if (!string.IsNullOrWhiteSpace(selectedCoffeeChoice))
 {
-    <div>
-        <h2 style="color: #FAFAD2; text-align: center;">Your Selected Coffee:</h2>
-        <p>@selectedCoffeeChoice</p>
-        <div class="text-center">
-        <img src="@GetImagePath(selectedCoffeeChoice)" alt="Selected Coffee" width="200"/>
+        <div class="container text-center mt-5">
+            <div class="row justify-content-center">
+                <div class="col col-sm-4 col-md-3">
+    <div style="color:#FAFAD2;">
+        <h2 style="color:#FAFAD2;">Your Selected Coffee:</h2>
+            <p>@selectedCoffeeChoice</p>
+            <div class="text-center">
+               <img src="@GetImagePath(selectedCoffeeChoice)" alt="Selected Coffee" width="200" />
+            </div>
+                </div>
+            </div>
         </div>
     </div>
-}
-<div class="options">
-    <!-- Add additional options here -->
-</div>
-<button class="btn default outlined-button justify-items-center my-3" @onclick="() => NavigateToPreOrderPage(goBack)">Go back</button>
 
+        <form>
+        <div class="container text-center mt-5">
+            <div class="row justify-content-center">
+                <div class="col col-sm-4 col-md-3">
+        <h3 style="color:#FAFAD2; font-weight: bolder; font-size: 30px;">Options:</h3>
+        <label for="quantity" style="color:#FAFAD2;">Choose coffee quantity:</label>
+            <select id="quantity" @bind="coffeeQuantity">
+                @for (int i = 1; i <= 10; i++)
+                {
+                    <option value="@i">@i</option>
+                }
+            </select>
+
+        <div style="color:#FAFAD2;">
+                <label>
+                    <input type="checkbox" @bind="addSugar" /> Add sugar
+                </label>
+            </div>
+
+        <div style="color:#FAFAD2;">
+                <label>
+                    <input type="checkbox" @bind="noSugar" /> No sugar
+                </label>
+            </div>
+
+        <div style="color:#FAFAD2;">
+                <label>
+                    <input type="checkbox" @bind="longCoffee" /> Long coffee
+                </label>
+            </div>
+
+        <div style="color:#FAFAD2;">
+                <label>
+                    <input type="checkbox" @bind="shortCoffee" /> Short coffee
+                </label>
+            </div>
+
+            <div style="color:#FAFAD2;">
+                <label>
+                    <input type="checkbox" @bind="withMilk" /> With milk
+                </label>
+            </div>
+
+        <div style="color:#FAFAD2;">
+                <label>
+                    <input type="checkbox" @bind="withoutMilk" /> Without milk
+                </label>
+            </div>
+    </div>
+    </div>
+    </div>
+<div  style="display: flex;">
+            <button class="btn default outlined-button justify-items-center my-3" style="color:#FAFAD2;" @onclick="Order">Order</button>
+            </div>
+<div  style="display: flex;">
+        <button class="btn default outlined-button justify-items-center my-3" style="color:#FAFAD2;" @onclick="Cancel">Cancel</button>
+</div>
+        </form>
+}
+
+else
+{
+    <p style="color:#FAFAD2;">No coffee selected. Please return to main page.</p>
+    <button class="btn default outlined-button justify-items-center my-3" style="color:#FAFAD2;" @onclick="goBack">Go Back</button>
+}
 
 @code {
     [Parameter]
     public string Choice { get; set; }
 
-    private string coffeeChoice;
     private string selectedCoffeeChoice;
 
     protected override void OnInitialized()
@@ -32,24 +97,42 @@
         selectedCoffeeChoice = System.Web.HttpUtility.ParseQueryString(uri.Query).Get("choice");
     }
 
-    private void SelectOption(string option)
-    {
-
-    }
-
-    private string goBack;
-
-    private void NavigateToPreOrderPage(string selectedChoice)
-    {
-        goBack = selectedChoice;
-        NavigationManager.NavigateTo($"/");
-    }
     private string GetImagePath(string coffeeChoice)
     {
         if (coffeeChoice == "Cappuccino") return "css/cappuccino.png";
         if (coffeeChoice == "Espresso") return "css/espresso.png";
-        // Add more cases for other coffee choices
+        if (coffeeChoice == "Light Latte") return "css/lightlatte.png";
+        if (coffeeChoice == "Can Panna") return "css/canpanna.png";
 
         return "css/default-coffee.png";
     }
+
+    private int coffeeQuantity = 1;
+    private bool addSugar;
+    private bool noSugar;
+    private bool longCoffee;
+    private bool shortCoffee;
+    private bool withMilk;
+    private bool withoutMilk; 
+    private string selectedBoxDescription;
+    private bool mainBoxOpen = false;
+    private string coffeeChoice;
+
+
+    private void goBack()
+    {
+        NavigationManager.NavigateTo("/");
+    }
+
+    private void Cancel()
+    {
+        NavigationManager.NavigateTo("/PreOrder");
+    }
+
+    private void Order()
+    {
+        NavigationManager.NavigateTo("/PaymentMethodDialog");
+    }
+
+
 }

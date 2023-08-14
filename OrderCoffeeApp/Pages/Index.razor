@@ -32,6 +32,7 @@
             <img src="@selectedCoffeeOption.ImagePath" width="200">
             <p style="color: #000;">@selectedCoffeeOption.Description</p>
             <button class="btn default outlined-button justify-items-center my-3" @onclick="NavigateToPreOrderPage">Choose</button>
+
         </div>
     </div>
 }
@@ -55,6 +56,7 @@
     private string selectedBoxDescription;
     private bool mainBoxOpen = false;
     private CoffeeOption selectedCoffeeOption;
+    private string coffeeChoice;
 
     private void NavigateToPreOrderPage()
     {
@@ -95,4 +97,5 @@
         selectedOption = option;
         NavigationManager.NavigateTo($"/PreOrder/{selectedOption}");
     }
+    
 }
