@@ -2,24 +2,34 @@
 @inject NavigationManager NavigationManager
 
 <h1>Pre-Order Page</h1>
-<ImageBox CoffeeChoice="@coffeeChoice" />
 
-<h2 style="color: #FAFAD2;">Options:</h2>
+@if (!string.IsNullOrWhiteSpace(selectedCoffeeChoice))
+{
+    <div>
+        <h2 style="color: #FAFAD2; text-align: center;">Your Selected Coffee:</h2>
+        <p>@selectedCoffeeChoice</p>
+        <div class="text-center">
+        <img src="@GetImagePath(selectedCoffeeChoice)" alt="Selected Coffee" width="200"/>
+        </div>
+    </div>
+}
 <div class="options">
     <!-- Add additional options here -->
 </div>
 <button class="btn default outlined-button justify-items-center my-3" @onclick="() => NavigateToPreOrderPage(goBack)">Go back</button>
+
 
 @code {
     [Parameter]
     public string Choice { get; set; }
 
     private string coffeeChoice;
+    private string selectedCoffeeChoice;
 
     protected override void OnInitialized()
     {
         var uri = new Uri(NavigationManager.Uri);
-        coffeeChoice = System.Web.HttpUtility.ParseQueryString(uri.Query).Get("choice");
+        selectedCoffeeChoice = System.Web.HttpUtility.ParseQueryString(uri.Query).Get("choice");
     }
 
     private void SelectOption(string option)
@@ -33,5 +43,13 @@
     {
         goBack = selectedChoice;
         NavigationManager.NavigateTo($"/");
+    }
+    private string GetImagePath(string coffeeChoice)
+    {
+        if (coffeeChoice == "Cappuccino") return "css/cappuccino.png";
+        if (coffeeChoice == "Espresso") return "css/espresso.png";
+        // Add more cases for other coffee choices
+
+        return "css/default-coffee.png";
     }
 }

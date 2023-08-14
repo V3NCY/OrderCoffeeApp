@@ -1,25 +1,19 @@
-﻿@typeparam TItem
-
-<div>
-    <p>@ChildContent</p>
+﻿<div>
+    <h2>Your Selected Coffee:</h2>
+    <p>@CoffeeChoice</p>
     <img src="@GetImagePath(CoffeeChoice)" alt="Selected Coffee" width="200" />
 </div>
 
 @code {
     [Parameter]
-    public RenderFragment ChildContent { get; set; }
-
-    [Parameter]
     public string CoffeeChoice { get; set; }
 
     private string GetImagePath(string coffeeChoice)
     {
-        // Return the image path based on the coffee choice
         if (coffeeChoice == "Cappuccino") return "css/cappuccino.png";
         if (coffeeChoice == "Espresso") return "css/espresso.png";
         // Add more cases for other coffee choices
 
-        // Default image path if coffee choice is not recognized
         return "css/default-coffee.png";
     }
 }
