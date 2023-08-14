@@ -5,50 +5,86 @@
           <img src="css/logo.png" width="50" class="logo-img img-fluid">
         </div>
         <h1>Order your coffee here</h1>
-     <div class="overlay" id="overlay">
-    <div class="box">
-        <button class="close-box-btn" onclick="closeBox()">X</button>
-        <p style="color: #000;"></p>
-        <button class="btn default outlined-button justify-items-center my-3" @onclick="() => NavigateToPreOrderPage(coffeeChoice)">Choose</button>
+<div class="container">
+    <div class="row justify-content-center my-3">
+        <!-- Use a loop to generate the coffee options -->
+        @foreach (var coffeeOption in coffeeOptions)
+        {
+            <div class="col-sm-4 col-md-3">
+                <div class="menu-box"
+                 @onmouseover="() => ShowDescription(coffeeOption.Description)"
+                 @onmouseout="() => HideDescription()">
+                    <h1 style="color: #000;">@coffeeOption.Name</h1>
+                    <img src="@coffeeOption.ImagePath" width="200" @onclick="() => OpenBox(coffeeOption)">
+                </div>
+            </div>
+        }
     </div>
 </div>
- <div class="container">
-    <!-- Menu with Other Boxes -->
-    <div class="row justify-content-center my-3">
-      <div class="col-sm-4 col-md-3">
-        <div class="menu-box" onmouseover="showDescription(this)" onmouseout="hideDescription(this)" onclick="openBox(this)">
-                <h1 style="color: #000;">Cappuccino</h1>
-          <img src="css/cappuccino.png" width="200">
-        </div>
 
-      </div>
-      <div class="col-sm-4 col-md-3">
-            <div class="menu-box" onmouseover="showDescription(this)" onmouseout="hideDescription(this)" onclick="openBox(this)">
-                    <h1 style="color: #000;">Espresso</h1>
-          <img src="css/espresso.png" width="200">
-        </div>
-      </div>
-      <div class="col-sm-4 col-md-3">
-        <div class="menu-box" onmouseover="showDescription(this)" onmouseout="hideDescription(this)" onclick="openBox(this)">
-             <h1 style="color: #000;">Can Panna</h1>
-          <img src="css/canpanna.png" width="150">
-        </div>
-      </div>
-        <div class="col-sm-4 col-md-3">
-                    <div class="menu-box" onmouseover="showDescription(this)" onmouseout="hideDescription(this)" onclick="openBox(this)">
-                <h1 style="color: #000;">Light Latte</h1>
-                <img src="css/lightlatte.png" width="200">
-            </div>
+@if (mainBoxOpen)
+{
+    <div class="overlay" id="overlay">
+        <div class="box">
+            <button class="close-box-btn" @onclick="CloseBox">X</button>
+            <h1 style="color: #000;">@selectedCoffeeOption.Name</h1>
+            <img src="@selectedCoffeeOption.ImagePath" width="200">
+            <p style="color: #000;">@selectedCoffeeOption.Description</p>
+            <button class="btn default outlined-button justify-items-center my-3" @onclick="NavigateToPreOrderPage">Choose</button>
         </div>
     </div>
-            </div>
- 
-@code {
-    private string coffeeChoice;
+}
 
-    private void NavigateToPreOrderPage(string selectedChoice)
+@code {
+    private class CoffeeOption
     {
-        coffeeChoice = selectedChoice;
-        NavigationManager.NavigateTo($"/PreOrder?choice={coffeeChoice}");
+        public string Name { get; set; }
+        public string Description { get; set; }
+        public string ImagePath { get; set; }
     }
+
+    private List<CoffeeOption> coffeeOptions = new List<CoffeeOption>
+    {
+        new CoffeeOption { Name = "Cappuccino", Description = "Cappuccino description.", ImagePath = "css/cappuccino.png" },
+        new CoffeeOption { Name = "Espresso", Description = "Espresso description.", ImagePath = "css/espresso.png" },
+        new CoffeeOption { Name = "Can Panna", Description = "Can Panna description.", ImagePath = "css/canpanna.png" },
+        new CoffeeOption { Name = "Light Latte", Description = "Light Latte description.", ImagePath = "css/lightlatte.png" },
+    };
+
+    private string selectedBoxDescription;
+    private bool mainBoxOpen = false;
+    private CoffeeOption selectedCoffeeOption;
+
+    private void NavigateToPreOrderPage()
+    {
+        if (selectedCoffeeOption != null)
+        {
+            NavigationManager.NavigateTo($"/PreOrder?choice={selectedCoffeeOption.Name}");
         }
+    }
+
+    private void OpenBox(CoffeeOption coffeeOption)
+    {
+        selectedBoxDescription = coffeeOption.Description;
+        selectedCoffeeOption = coffeeOption;
+        mainBoxOpen = true;
+    }
+
+    private void CloseBox()
+    {
+        selectedBoxDescription = "";
+        selectedCoffeeOption = null;
+        mainBoxOpen = false;
+    }
+
+    private void ShowDescription(string description)
+    {
+        selectedBoxDescription = description;
+    }
+
+    private async Task HideDescription()
+    {
+        await Task.Delay(100); // Delay to ensure smooth transition
+        selectedBoxDescription = "";
+    }
+}
