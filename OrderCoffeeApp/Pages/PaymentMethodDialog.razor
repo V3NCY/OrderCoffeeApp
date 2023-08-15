@@ -1,16 +1,28 @@
-﻿<div class="payment-method-dialog">
-
-    <button class="btn btn-primary" @onclick="ShowCardPayment">Pay with Debit/Credit Card</button>
-    <button class="btn btn-primary" @onclick="ShowCashPayment">Pay with Cash</button>
-</div>
+﻿@*@if (showConfirmation)
+{
+    <div class="confirmation-dialog">
+        <p>@message</p>
+        <button class="btn btn-primary" @onclick="() => Confirm(true)">Confirm</button>
+        <button class="btn btn-secondary" @onclick="() => Confirm(false)">Cancel</button>
+    </div>
+}
 
 @code {
+    private bool showConfirmation = false;
+    private string message;
+    private Action<bool> onConfirm;
 
-    private void ShowCardPayment()
+    public void Show(string confirmationMessage, List<string> options, Action<bool> confirmCallback)
     {
+        message = confirmationMessage + " Options: " + string.Join(", ", options);
+        onConfirm = confirmCallback;
+        showConfirmation = true;
     }
 
-    private void ShowCashPayment()
+    private void Confirm(bool confirmed)
     {
+        showConfirmation = false;
+        onConfirm?.Invoke(confirmed);
     }
 }
+*@

@@ -10,7 +10,7 @@
                 <div class="col col-sm-4 col-md-3">
     <div style="color:#FAFAD2;">
         <h2 style="color:#FAFAD2;">Your Selected Coffee:</h2>
-            <p>@selectedCoffeeChoice</p>
+                    <p style="color:#FAFAD2;">@selectedCoffeeChoice</p>
             <div class="text-center">
                <img src="@GetImagePath(selectedCoffeeChoice)" alt="Selected Coffee" width="200" />
             </div>
@@ -70,26 +70,36 @@
     </div>
     </div>
     </div>
+        </form>
 <div  style="display: flex;">
             <button class="btn default outlined-button justify-items-center my-3" style="color:#FAFAD2;" @onclick="Order">Order</button>
             </div>
 <div  style="display: flex;">
         <button class="btn default outlined-button justify-items-center my-3" style="color:#FAFAD2;" @onclick="Cancel">Cancel</button>
 </div>
-        </form>
 }
 
-else
+else if (!string.IsNullOrWhiteSpace(GetMessageFromQueryString()))
 {
-    <p style="color:#FAFAD2;">No coffee selected. Please return to main page.</p>
-    <button class="btn default outlined-button justify-items-center my-3" style="color:#FAFAD2;" @onclick="goBack">Go Back</button>
+    <p style="color:#FAFAD2;">@GetMessageFromQueryString()</p>
+    <button class="btn default outlined-button justify-items-center my-3" style="color:#FAFAD2;" @onclick="GoBack">Go Back</button>
 }
 
 @code {
-    [Parameter]
     public string Choice { get; set; }
 
     private string selectedCoffeeChoice;
+    
+    private int coffeeQuantity = 1;
+    private bool addSugar;
+    private bool noSugar;
+    private bool longCoffee;
+    private bool shortCoffee;
+    private bool withMilk;
+    private bool withoutMilk; 
+    private string selectedBoxDescription;
+    private bool mainBoxOpen = false;
+    private string coffeeChoice;
 
     protected override void OnInitialized()
     {
@@ -107,32 +117,29 @@ else
         return "css/default-coffee.png";
     }
 
-    private int coffeeQuantity = 1;
-    private bool addSugar;
-    private bool noSugar;
-    private bool longCoffee;
-    private bool shortCoffee;
-    private bool withMilk;
-    private bool withoutMilk; 
-    private string selectedBoxDescription;
-    private bool mainBoxOpen = false;
-    private string coffeeChoice;
-
-
-    private void goBack()
+    private void Cancel()
     {
         NavigationManager.NavigateTo("/");
     }
 
-    private void Cancel()
-    {
-        NavigationManager.NavigateTo("/PreOrder");
-    }
 
     private void Order()
     {
-        NavigationManager.NavigateTo("/PaymentMethodDialog");
+        if (!string.IsNullOrWhiteSpace(selectedCoffeeChoice))
+        {
+            NavigationManager.NavigateTo("/Payment");
+        }
     }
 
+ private string GetMessageFromQueryString()
+    {
+        var uri = new Uri(NavigationManager.Uri);
+        var message = System.Web.HttpUtility.ParseQueryString(uri.Query).Get("message");
+        return message;
+    }
 
+    private void GoBack()
+    {
+        NavigationManager.NavigateTo("/");
+    }
 }
