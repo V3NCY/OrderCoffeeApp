@@ -7,7 +7,6 @@
         <h1>Order your coffee here</h1>
 <div class="container">
     <div class="row justify-content-center my-3">
-        <!-- Use a loop to generate the coffee options -->
         @foreach (var coffeeOption in coffeeOptions)
         {
             <div class="col-sm-4 col-md-3">
@@ -87,7 +86,7 @@
 
     private async Task HideDescription()
     {
-        await Task.Delay(100); // Delay to ensure smooth transition
+        await Task.Delay(100);
         selectedBoxDescription = "";
     }
     private int selectedOption;

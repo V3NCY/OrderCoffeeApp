@@ -39,8 +39,8 @@ p {
     font-weight: bold;
     font-size: 16px;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
-    margin-bottom: 20px; /* Add margin to separate the boxes vertically */
-    padding: 10px; /* Add padding inside the boxes for better spacing */
+    margin-bottom: 20px;
+    padding: 10px; 
     background-color: rgba(255, 255, 255, 0.9);
     display: block;
     flex-direction: initial;
@@ -59,20 +59,20 @@ p {
     left: 0;
     width: auto;
     height: auto;
-    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+    background-color: rgba(0, 0, 0, 0.5);
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 9999; /* Ensure the box appears on top of other content */
+    z-index: 9999; 
 }
 
 .box {
     width: auto;
     height: auto;
-    background-color: rgba(255, 255, 255, 0.9); /* Semi-transparent white background */
+    background-color: rgba(255, 255, 255, 0.9); 
     padding: 20px;
     border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Add a subtle shadow to the box */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); 
     overflow: hidden;
     word-wrap: break-word;
 }
@@ -81,7 +81,7 @@ button {
     margin-top: 10px;
 }
 .close-box-btn {
-    position: absolute; /* Set the position of the "X" button to absolute */
+    position: absolute; 
     top: 10px;
     right: 10px;
     cursor: pointer;
@@ -92,19 +92,19 @@ button {
 }
 
 .logo-wrapper {
-    margin-top: 20px; /* Add some top margin for spacing */
-    text-align: center; /* Center the image horizontally */
+    margin-top: 20px; 
+    text-align: center; 
 }
 
 .description {
-    display: none; /* Hide the description by default */
-    position: absolute; /* Position the description absolutely */
-    bottom: -25px; /* Adjust the distance between the box and the description */
-    left: 50%; /* Center the description horizontally */
-    transform: translateX(-50%); /* Adjust horizontal centering */
+    display: none; 
+    position: absolute;
+    bottom: -25px;
+    left: 50%;
+    transform: translateX(-50%); 
     background-color: #333;
     color: #fff;
     padding: 5px;
     border-radius: 5px;
-    z-index: 1; /* Set a higher z-index to ensure the description is above other elements */
+    z-index: 1; 
 }
