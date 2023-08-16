@@ -8,12 +8,17 @@
 <button class="btn default outlined-button justify-items-center my-3" style="color:#FAFAD2;" @onclick="GoBack">Go Back</button>
 
 @code {
+
+    private string selectedCoffeeChoice;
+
     private void GoHome()
     {
         NavigationManager.NavigateTo("/");
     }
     private void GoBack()
     {
-        NavigationManager.NavigateTo("/PreOrder");
+        var queryString = !string.IsNullOrWhiteSpace(selectedCoffeeChoice) ? $"?choice={selectedCoffeeChoice}" : "";
+        NavigationManager.NavigateTo($"/PreOrder{queryString}");
+
     }
 }
