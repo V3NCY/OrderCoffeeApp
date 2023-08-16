@@ -35,25 +35,18 @@
     }
     private async Task PayByCard()
     {
-        // Redirect to the POS terminal or perform the necessary actions for online payment
-        // You can replace the URL with the actual URL of the POS terminal
+        // Redirect to the POS terminal or perform the necessary actions for online payment. Adding a link to online Virtual POS terminal
         NavigationManager.NavigateTo("https://www.google.com");
     }
 
     private void PayOnCounter()
     {
-        // Generate a specific number for payment on the counter and display it to the user
-        // This can be a random number or any other logic you prefer
-        // You can set this number to a property and display it in the UI
         PaymentNumber = GeneratePaymentNumber();
     }
-
-    // You can add other necessary properties and methods here
 
   
     private int GeneratePaymentNumber()
     {
-        // Generate a random payment number or implement your logic here
         Random random = new Random();
         return random.Next(1000, 9999);
     }
