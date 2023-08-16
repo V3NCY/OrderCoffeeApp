@@ -1,15 +1,27 @@
 ﻿@page "/Payment"
 @inject NavigationManager NavigationManager
+@inject IJSRuntime JSRuntime
 
 
 <h3 style="color:#FAFAD2; text-align: center;">Payment</h3>
 
-<button class="btn default outlined-button justify-items-center my-3" style="color:#FAFAD2;" @onclick="GoHome">Go Home</button>
-<button class="btn default outlined-button justify-items-center my-3" style="color:#FAFAD2;" @onclick="GoBack">Go Back</button>
+<div class="container text-center mt-5">
+    <h4 style="color:#FAFAD2;">Select Payment Method:</h4>
+    <div>
+        <button class="btn default outlined-button my-3" @onclick="PayByCard">Pay by Card</button>
+        <button class="btn default outlined-button my-3 ml-3" @onclick="PayOnCounter">Pay on the Counter</button>
+    </div>
+</div>
+
+<button class="btn default outlined-button justify-items-center my-3" style="color:#FAFAD2; width: 100px;" @onclick="GoHome">Go Home</button>
+<button class="btn default outlined-button justify-items-center my-3" style="color:#FAFAD2; width: 100px;" @onclick="GoBack">Go Back</button>
+
+
 
 @code {
 
     private string selectedCoffeeChoice;
+    private int PaymentNumber;
 
     private void GoHome()
     {
@@ -20,5 +32,29 @@
         var queryString = !string.IsNullOrWhiteSpace(selectedCoffeeChoice) ? $"?choice={selectedCoffeeChoice}" : "";
         NavigationManager.NavigateTo($"/PreOrder{queryString}");
 
+    }
+    private async Task PayByCard()
+    {
+        // Redirect to the POS terminal or perform the necessary actions for online payment
+        // You can replace the URL with the actual URL of the POS terminal
+        NavigationManager.NavigateTo("https://www.google.com");
+    }
+
+    private void PayOnCounter()
+    {
+        // Generate a specific number for payment on the counter and display it to the user
+        // This can be a random number or any other logic you prefer
+        // You can set this number to a property and display it in the UI
+        PaymentNumber = GeneratePaymentNumber();
+    }
+
+    // You can add other necessary properties and methods here
+
+  
+    private int GeneratePaymentNumber()
+    {
+        // Generate a random payment number or implement your logic here
+        Random random = new Random();
+        return random.Next(1000, 9999);
     }
 }
