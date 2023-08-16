@@ -76,7 +76,6 @@
     @if (!string.IsNullOrWhiteSpace(selectedCoffeeChoice))
     {
         <div class="container text-center mt-5">
-            <!-- Rest of your code for displaying coffee choice and options -->
         </div>
 
         <div style="display: flex; justify-content: center; margin-top: 20px;">
@@ -84,7 +83,6 @@
             <button class="btn default outlined-button my-3 ml-3" @onclick="Cancel">Cancel</button>
         </div>
 
-        <!-- Confirmation Dialog Modal -->
         <div class="modal fade" id="confirmOrderModal" tabindex="-1" role="dialog" aria-labelledby="confirmOrderModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
@@ -128,9 +126,7 @@ else if (!string.IsNullOrWhiteSpace(GetMessageFromQueryString()))
 
 @code {
     public string Choice { get; set; }
-
     private string selectedCoffeeChoice;
-    
     private int coffeeQuantity = 1;
     private bool addSugar;
     private bool noSugar;
@@ -176,8 +172,6 @@ else if (!string.IsNullOrWhiteSpace(GetMessageFromQueryString()))
     return string.Join(", ", options);
 }
 
-
-
  private string GetMessageFromQueryString()
     {
         var uri = new Uri(NavigationManager.Uri);
@@ -198,12 +192,11 @@ else if (!string.IsNullOrWhiteSpace(GetMessageFromQueryString()))
             if (confirmed)
             {
                 selectedOptions = ConstructSelectedOptionsString();
-                NavigationManager.NavigateTo("/Payment"); // Redirect to the payment page
+                NavigationManager.NavigateTo("/Payment"); 
             }
         }
         else
         {
-            // Handle the case where no coffee is selected (you can show a message or take appropriate action)
         }
     }
 
