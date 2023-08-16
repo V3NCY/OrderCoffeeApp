@@ -1,5 +1,6 @@
 ﻿@page "/PreOrder"
 @inject NavigationManager NavigationManager
+@inject IJSRuntime JSRuntime
 
 <h1>Pre-Order Page</h1>
 
@@ -123,11 +124,19 @@ else if (!string.IsNullOrWhiteSpace(GetMessageFromQueryString()))
     }
 
 
-    private void Order()
+    private async Task Order()
     {
         if (!string.IsNullOrWhiteSpace(selectedCoffeeChoice))
         {
-            NavigationManager.NavigateTo("/Payment");
+            var confirmed = await JSRuntime.InvokeAsync<bool>("confirm", "Do you confirm your order?");
+            if (confirmed)
+            {
+                NavigationManager.NavigateTo("/Payment"); // Redirect to the payment page
+            }
+        }
+        else
+        {
+            // Handle the case where no coffee is selected (you can show a message or take appropriate action)
         }
     }
 
