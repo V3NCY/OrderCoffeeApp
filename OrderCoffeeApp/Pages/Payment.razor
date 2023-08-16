@@ -16,12 +16,16 @@
 <button class="btn default outlined-button justify-items-center my-3" style="color:#FAFAD2; width: 100px;" @onclick="GoHome">Go Home</button>
 <button class="btn default outlined-button justify-items-center my-3" style="color:#FAFAD2; width: 100px;" @onclick="GoBack">Go Back</button>
 
-
+@if (PaymentNumber.HasValue)
+{
+    <p style="color:#FAFAD2;">Please proceed to the counter and provide the following payment number:</p>
+    <h2 style="color:#FAFAD2;">@PaymentNumber</h2>
+}
 
 @code {
 
     private string selectedCoffeeChoice;
-    private int PaymentNumber;
+    private int? PaymentNumber;
 
     private void GoHome()
     {
@@ -35,19 +39,19 @@
     }
     private async Task PayByCard()
     {
-        // Redirect to the POS terminal or perform the necessary actions for online payment. Adding a link to online Virtual POS terminal
-        NavigationManager.NavigateTo("https://www.google.com");
+        NavigationManager.NavigateTo("https://your-pos-terminal-url");
     }
 
     private void PayOnCounter()
     {
         PaymentNumber = GeneratePaymentNumber();
+        StateHasChanged(); 
     }
 
-  
+
     private int GeneratePaymentNumber()
     {
         Random random = new Random();
-        return random.Next(1000, 9999);
+        return random.Next(100, 900);
     }
 }
