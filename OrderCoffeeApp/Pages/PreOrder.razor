@@ -35,7 +35,7 @@
 
         <div style="color:#FAFAD2;">
                 <label>
-                    <input type="checkbox" @bind="addSugar" /> Add sugar
+                    <input type="checkbox" @bind="addSugar" /> Sugar
                 </label>
             </div>
 
@@ -169,7 +169,7 @@ else if (!string.IsNullOrWhiteSpace(GetMessageFromQueryString()))
 {
     List<string> options = new List<string>();
 
-    if (addSugar) options.Add("Add sugar");
+    if (addSugar) options.Add("Sugar");
     if (noSugar) options.Add("No sugar");
     if (longCoffee) options.Add("Long coffee");
     if (shortCoffee) options.Add("Short coffee");
@@ -197,7 +197,7 @@ else if (!string.IsNullOrWhiteSpace(GetMessageFromQueryString()))
     {
         if (!string.IsNullOrWhiteSpace(selectedCoffeeChoice))
         {
-            var confirmed = await JSRuntime.InvokeAsync<bool>("confirm", "Do you confirm your order with the following options:\n" + ConstructSelectedOptionsString());
+            var confirmed = await JSRuntime.InvokeAsync<bool>("confirm", $"Do you confirm your order of: {coffeeQuantity} {GetPluralizedCoffeeText()} with the following added options:\n{ConstructSelectedOptionsString()}?");
             if (confirmed)
             {
                 selectedOptions = ConstructSelectedOptionsString();
@@ -207,6 +207,18 @@ else if (!string.IsNullOrWhiteSpace(GetMessageFromQueryString()))
         else
         {
             // Handle the case where no coffee is selected (you can show a message or take appropriate action)
+        }
+    }
+
+    private string GetPluralizedCoffeeText()
+    {
+        if (coffeeQuantity == 1)
+        {
+            return "coffee";
+        }
+        else
+        {
+            return "coffees";
         }
     }
 
