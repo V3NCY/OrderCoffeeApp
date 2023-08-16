@@ -72,12 +72,52 @@
     </div>
     </div>
         </form>
-<div  style="display: flex;">
+
+    @if (!string.IsNullOrWhiteSpace(selectedCoffeeChoice))
+    {
+        <div class="container text-center mt-5">
+            <!-- Rest of your code for displaying coffee choice and options -->
+        </div>
+
+        <div style="display: flex; justify-content: center; margin-top: 20px;">
+            <button class="btn default outlined-button my-3" @onclick="Order">Confirm Order</button>
+            <button class="btn default outlined-button my-3 ml-3" @onclick="Cancel">Cancel</button>
+        </div>
+
+        <!-- Confirmation Dialog Modal -->
+        <div class="modal fade" id="confirmOrderModal" tabindex="-1" role="dialog" aria-labelledby="confirmOrderModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="confirmOrderModalLabel">Confirm Order</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        Do you confirm your order with the following options?
+                        <p>@selectedOptions</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal" @onclick="Cancel">Cancel</button>
+                        <button type="button" class="btn btn-primary" @onclick="Order">Confirm</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    else if (!string.IsNullOrWhiteSpace(GetMessageFromQueryString()))
+    {
+        <p>@GetMessageFromQueryString()</p>
+        <button class="btn default outlined-button justify-items-center my-3" @onclick="GoBack">Go Back</button>
+    }
+
+@*<div  style="display: flex;">
             <button class="btn default outlined-button justify-items-center my-3" style="color:#FAFAD2;" @onclick="Order">Order</button>
             </div>
 <div  style="display: flex;">
         <button class="btn default outlined-button justify-items-center my-3" style="color:#FAFAD2;" @onclick="Cancel">Cancel</button>
-</div>
+</div>*@
 }
 
 else if (!string.IsNullOrWhiteSpace(GetMessageFromQueryString()))
@@ -101,6 +141,8 @@ else if (!string.IsNullOrWhiteSpace(GetMessageFromQueryString()))
     private string selectedBoxDescription;
     private bool mainBoxOpen = false;
     private string coffeeChoice;
+    private string selectedOptions;
+
 
     protected override void OnInitialized()
     {
@@ -123,22 +165,21 @@ else if (!string.IsNullOrWhiteSpace(GetMessageFromQueryString()))
         NavigationManager.NavigateTo("/");
     }
 
+    private string ConstructSelectedOptionsString()
+{
+    List<string> options = new List<string>();
 
-    private async Task Order()
-    {
-        if (!string.IsNullOrWhiteSpace(selectedCoffeeChoice))
-        {
-            var confirmed = await JSRuntime.InvokeAsync<bool>("confirm", "Do you confirm your order?");
-            if (confirmed)
-            {
-                NavigationManager.NavigateTo("/Payment"); // Redirect to the payment page
-            }
-        }
-        else
-        {
-            // Handle the case where no coffee is selected (you can show a message or take appropriate action)
-        }
-    }
+    if (addSugar) options.Add("Add sugar");
+    if (noSugar) options.Add("No sugar");
+    if (longCoffee) options.Add("Long coffee");
+    if (shortCoffee) options.Add("Short coffee");
+    if (withMilk) options.Add("With milk");
+    if (withoutMilk) options.Add("Without milk");
+
+    return string.Join(", ", options);
+}
+
+
 
  private string GetMessageFromQueryString()
     {
@@ -151,4 +192,22 @@ else if (!string.IsNullOrWhiteSpace(GetMessageFromQueryString()))
     {
         NavigationManager.NavigateTo("/");
     }
+
+    private async Task Order()
+    {
+        if (!string.IsNullOrWhiteSpace(selectedCoffeeChoice))
+        {
+            var confirmed = await JSRuntime.InvokeAsync<bool>("confirm", "Do you confirm your order with the following options:\n" + ConstructSelectedOptionsString());
+            if (confirmed)
+            {
+                selectedOptions = ConstructSelectedOptionsString();
+                NavigationManager.NavigateTo("/Payment"); // Redirect to the payment page
+            }
+        }
+        else
+        {
+            // Handle the case where no coffee is selected (you can show a message or take appropriate action)
+        }
+    }
+
 }
