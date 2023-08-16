@@ -4,11 +4,17 @@
 
 <h3 style="color:#FAFAD2; text-align: center;">Payment</h3>
 
-<button class="btn default outlined-button justify-items-center my-3" style="color:#FAFAD2;" @onclick="GoBack">Go Home</button>
+<button class="btn default outlined-button justify-items-center my-3" style="color:#FAFAD2;" @onclick="GoHome">Go Home</button>
+<button class="btn default outlined-button justify-items-center my-3" style="color:#FAFAD2;" @onclick="GoBack">Go Back</button>
 
 @code {
-    private void GoBack()
+    private void GoHome()
     {
         NavigationManager.NavigateTo("/");
     }
+    private void GoBack()
+    {
+        NavigationManager.NavigateTo("/PreOrder");
+    }
 }
+Pre-Order Page

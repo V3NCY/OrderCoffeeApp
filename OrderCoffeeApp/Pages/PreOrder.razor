@@ -98,9 +98,9 @@
                         Do you confirm your order with the following options?
                         <p>@selectedOptions</p>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal" @onclick="Cancel">Cancel</button>
-                        <button type="button" class="btn btn-primary" @onclick="Order">Confirm</button>
+                    <div class="modal-footer" style="display: d-flex; flex-direction: column; align-items: center; margin-top: 20px;">
+                        <button type="button" class="btn default outlined-button justify-items-center my-3" style="color:#FAFAD2;" data-dismiss="modal" @onclick="Cancel">Cancel</button>
+                        <button type="button" class="btn default outlined-button justify-items-center my-3" style="color:#FAFAD2;" @onclick="Order">Confirm</button>
                     </div>
                 </div>
             </div>
@@ -138,9 +138,6 @@ else if (!string.IsNullOrWhiteSpace(GetMessageFromQueryString()))
     private bool shortCoffee;
     private bool withMilk;
     private bool withoutMilk; 
-    private string selectedBoxDescription;
-    private bool mainBoxOpen = false;
-    private string coffeeChoice;
     private string selectedOptions;
 
 
