@@ -8,8 +8,8 @@
 <div class="container text-center mt-5">
     <h4 style="color:#FAFAD2;">Select Payment Method:</h4>
     <div>
-        <button class="btn default outlined-button my-3" @onclick="PayByCard">Pay by Card</button>
-        <button class="btn default outlined-button my-3 ml-3" @onclick="PayOnCounter">Pay on the Counter</button>
+        <button class="btn default outlined-button justify-items-center my-3" style="color:#FAFAD2;" @onclick="PayByCard">Pay by Card</button>
+        <button class="btn default outlined-button justify-items-center my-3 ml-3" @onclick="PayOnCounter">Pay on the Counter</button>
     </div>
 </div>
 
@@ -22,10 +22,31 @@
     <h2 style="color:#FAFAD2;">@PaymentNumber</h2>
 }
 
+@if (showPaymentConfirmation)
+{
+    <div class="modal fade show" id="paymentConfirmationModal" tabindex="-1" role="dialog" style="display: block;">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    @paymentConfirmationMessage
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn default outlined-button" @onclick="ClosePaymentConfirmation">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-backdrop fade show"></div>
+}
+
 @code {
 
     private string selectedCoffeeChoice;
     private int? PaymentNumber;
+    private bool showPaymentConfirmation = false;
+    private bool payByCardDisabled = false;
+    private bool payOnCounterDisabled = false;
+    private string paymentConfirmationMessage = "";
 
     private void GoHome()
     {
@@ -39,13 +60,17 @@
     }
     private async Task PayByCard()
     {
-        NavigationManager.NavigateTo("https://your-pos-terminal-url");
+        paymentConfirmationMessage = "Please continue to the POS terminal.";
+        showPaymentConfirmation = true;
+        payOnCounterDisabled = true;
     }
 
-    private void PayOnCounter()
+    private async Task PayOnCounter()
     {
-        PaymentNumber = GeneratePaymentNumber();
-        StateHasChanged(); 
+        int paymentNumber = GeneratePaymentNumber();
+        paymentConfirmationMessage = $"Please proceed to the counter and provide payment number: {paymentNumber}";
+        showPaymentConfirmation = true;
+        payByCardDisabled = true;
     }
 
 
@@ -53,5 +78,12 @@
     {
         Random random = new Random();
         return random.Next(100, 900);
+    }
+
+    private void ClosePaymentConfirmation()
+    {
+        showPaymentConfirmation = false;
+        payByCardDisabled = false;
+        payOnCounterDisabled = false;
     }
 }
