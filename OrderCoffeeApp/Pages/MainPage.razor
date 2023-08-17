@@ -1,0 +1,15 @@
+﻿@page "/"
+@inject NavigationManager NavigationManager
+
+<div class="container text-center mt-5">
+    <img src="css/logo.png" width="45"><h2 style="color: #FAFAD2;">Rise and Shine Without The Line</h2><img/>
+    <img src="css/mainpage.png" width="300" class="my-4" />
+
+    <button class="btn default outlined-button justify-items-center my-4" style="color: #FAFAD2;" @onclick="BeginOrder">Begin Order</button>
+</div>
+@code {
+    private void BeginOrder()
+    {
+        NavigationManager.NavigateTo("/Items");
+    }
+}

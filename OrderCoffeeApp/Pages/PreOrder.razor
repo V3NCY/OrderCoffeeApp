@@ -147,7 +147,7 @@ else if (!string.IsNullOrWhiteSpace(GetMessageFromQueryString()))
 
     private void Cancel()
     {
-        NavigationManager.NavigateTo("/");
+        NavigationManager.NavigateTo("/Items");
     }
 
     private string ConstructSelectedOptionsString()
@@ -173,7 +173,7 @@ else if (!string.IsNullOrWhiteSpace(GetMessageFromQueryString()))
 
     private void GoBack()
     {
-        NavigationManager.NavigateTo("/");
+        NavigationManager.NavigateTo("/Items");
     }
 
     private async Task Order()

@@ -1,4 +1,4 @@
-﻿@page "/"
+﻿@page "/Items"
 @inject NavigationManager NavigationManager
 
 <div class="logo-wrapper">
@@ -46,10 +46,10 @@
 
     private List<CoffeeOption> coffeeOptions = new List<CoffeeOption>
     {
-        new CoffeeOption { Name = "Cappuccino", Description = "Cappuccino description.", ImagePath = "css/cappuccino.png" },
-        new CoffeeOption { Name = "Espresso", Description = "Espresso description.", ImagePath = "css/espresso.png" },
-        new CoffeeOption { Name = "Can Panna", Description = "Can Panna description.", ImagePath = "css/canpanna.png" },
-        new CoffeeOption { Name = "Light Latte", Description = "Light Latte description.", ImagePath = "css/lightlatte.png" },
+        new CoffeeOption { Name = "Cappuccino", Description = "Cappuccino - 150ml. An espresso-based coffee drink, traditionally prepared with steamed milk foam with cinnamon or chocolate flavor.", ImagePath = "css/cappuccino.png" },
+        new CoffeeOption { Name = "Espresso", Description = "Espresso - 50ml.", ImagePath = "css/espresso.png" },
+        new CoffeeOption { Name = "Can Panna", Description = "Can Panna - 200ml.", ImagePath = "css/canpanna.png" },
+        new CoffeeOption { Name = "Light Latte", Description = "Light Latte - 100ml.", ImagePath = "css/lightlatte.png" },
     };
 
     private string selectedBoxDescription;

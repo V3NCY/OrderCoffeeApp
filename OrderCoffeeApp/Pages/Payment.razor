@@ -26,7 +26,7 @@
 @if (PaymentNumber.HasValue)
 {
     <p style="color:#FAFAD2;">Please proceed to the counter and provide the following payment number:</p>
-    <h2 style="color:#FAFAD2;">@PaymentNumber</h2>
+    <h2 style="color:#FAFAD2; font-size: 150px;">@PaymentNumber</h2>
 }
 
 
@@ -37,6 +37,7 @@
             <div class="modal-content">
                 <div class="modal-body">
                     @paymentConfirmationMessage
+                    <p>Total: $@totalPrice</p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn default outlined-button" @onclick="ClosePaymentConfirmation">Close</button>
@@ -44,6 +45,18 @@
             </div>
         </div>
     </div>
+    <div class="container text-center mt-5">
+    <h4 style="color:#FAFAD2;">Coffee Options</h4>
+    <div>
+        <label>
+            <input type="checkbox" @bind="addSugar" /> Add Sugar (+$0.50)
+        </label>
+        <br />
+        <label>
+            <input type="checkbox" @bind="withMilk" /> With Milk (+$0.75)
+        </label>
+    </div>
+</div>
     <div class="modal-backdrop fade show"></div>
 }
 
@@ -55,6 +68,20 @@
     private bool payByCardDisabled = false;
     private bool payOnCounterDisabled = false;
     private string paymentConfirmationMessage = "";
+    private decimal totalPaymentPrice;
+    private bool addSugar;
+    private bool withMilk;
+    private decimal totalPrice;
+    private int coffeeQuantity = 1;
+
+
+    private Dictionary<string, decimal> coffeePrices = new Dictionary<string, decimal>
+{
+    { "Cappuccino", 3.50M },
+    { "Espresso", 2.00M },
+    { "Light Latte", 4.00M },
+    { "Can Panna", 3.25M }
+};
 
     private void GoHome()
     {
@@ -66,9 +93,11 @@
         NavigationManager.NavigateTo($"/PreOrder{queryString}");
 
     }
+
     private async Task PayByCard()
     {
-        paymentConfirmationMessage = "Please continue to the POS terminal.";
+        decimal totalPrice = CalculateTotalPrice();
+        paymentConfirmationMessage = $"Please continue to the POS terminal. Total: ${totalPrice}";
         showPaymentConfirmation = true;
         payOnCounterDisabled = true;
         payByCardDisabled = true;
@@ -76,13 +105,44 @@
 
     private async Task PayOnCounter()
     {
+        decimal totalPrice = CalculateTotalPrice();
         int paymentNumber = GeneratePaymentNumber();
-        paymentConfirmationMessage = $"Please proceed to the counter and provide payment number: {paymentNumber}";
+        paymentConfirmationMessage = $"Please proceed to the counter and provide payment number: {paymentNumber}. Total: ${totalPrice}";
         showPaymentConfirmation = true;
         payByCardDisabled = true;
         payOnCounterDisabled = true;
     }
 
+
+    private decimal CalculateTotalPrice()
+    {
+        decimal coffeePrice = 0;
+
+        if (!string.IsNullOrWhiteSpace(selectedCoffeeChoice) && coffeePrices.TryGetValue(selectedCoffeeChoice, out var price))
+        {
+            coffeePrice = price;
+        }
+
+        decimal optionsPrice = 0;
+        if (addSugar)
+        {
+            optionsPrice += 0.5M;
+        }
+        if (withMilk)
+        {
+            optionsPrice += 0.5M;
+        }
+
+        decimal total = (coffeePrice + optionsPrice) * coffeeQuantity;
+
+        return total;
+    }
+
+    private void ShowPaymentConfirmationModal()
+    {
+        totalPaymentPrice = CalculateTotalPrice();
+        showPaymentConfirmation = true;
+    }
 
     private int GeneratePaymentNumber()
     {
@@ -93,5 +153,11 @@
     private void ClosePaymentConfirmation()
     {
         showPaymentConfirmation = false;
+    }
+
+
+    protected override void OnInitialized()
+    {
+        totalPrice = CalculateTotalPrice();
     }
 }
