@@ -8,8 +8,15 @@
 <div class="container text-center mt-5">
     <h4 style="color:#FAFAD2;">Select Payment Method:</h4>
     <div>
-        <button class="btn default outlined-button justify-items-center my-3" style="color:#FAFAD2;" @onclick="PayByCard">Pay by Card</button>
-        <button class="btn default outlined-button justify-items-center my-3 ml-3" @onclick="PayOnCounter">Pay on the Counter</button>
+       @if (!payByCardDisabled)
+        {
+            <button class="btn default outlined-button justify-items-center my-3" style="color:#FAFAD2;" @onclick="PayByCard">Pay by Card</button>
+        }
+
+        @if (!payOnCounterDisabled)
+        {
+            <button class="btn default outlined-button justify-items-center my-3 ml-3" @onclick="PayOnCounter">Pay on the Counter</button>
+        }
     </div>
 </div>
 
@@ -21,6 +28,7 @@
     <p style="color:#FAFAD2;">Please proceed to the counter and provide the following payment number:</p>
     <h2 style="color:#FAFAD2;">@PaymentNumber</h2>
 }
+
 
 @if (showPaymentConfirmation)
 {
@@ -63,6 +71,7 @@
         paymentConfirmationMessage = "Please continue to the POS terminal.";
         showPaymentConfirmation = true;
         payOnCounterDisabled = true;
+        payByCardDisabled = true;
     }
 
     private async Task PayOnCounter()
@@ -71,6 +80,7 @@
         paymentConfirmationMessage = $"Please proceed to the counter and provide payment number: {paymentNumber}";
         showPaymentConfirmation = true;
         payByCardDisabled = true;
+        payOnCounterDisabled = true;
     }
 
 
@@ -83,7 +93,5 @@
     private void ClosePaymentConfirmation()
     {
         showPaymentConfirmation = false;
-        payByCardDisabled = false;
-        payOnCounterDisabled = false;
     }
 }
